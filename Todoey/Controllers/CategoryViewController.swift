@@ -14,15 +14,14 @@ class CategoryViewController: UITableViewController {
     let realm = try! Realm()
     
     var categories: Results<Category>?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadCategories()
-
     }
     
-      //MARK: - Table view Datasource Methods
+    //MARK: - Table view Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -36,15 +35,14 @@ class CategoryViewController: UITableViewController {
         cell.textLabel?.text = categories?[indexPath.row].name ?? "no categories added yet"
         
         return cell
-        
     }
     
-        //MARK - Tableview delegate methods
+    //MARK - Tableview delegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         performSegue(withIdentifier: "goToItems", sender: self)
-    
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,11 +51,10 @@ class CategoryViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categories?[indexPath.row]
         }
-        
     }
     
     
-        //MARK: - Data Manipulation Methods
+    //MARK: - Data Manipulation Methods
     
     func save(category: Category){
         do {
@@ -69,20 +66,17 @@ class CategoryViewController: UITableViewController {
         }
         
         tableView.reloadData()
-        
     }
     
     func loadCategories() {
         
-        
         categories = realm.objects(Category.self)
-
+        
         tableView.reloadData()
         
     }
     
     //MARK: - add New Categories
-    
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -95,12 +89,7 @@ class CategoryViewController: UITableViewController {
             
             let newCategory = Category()
             newCategory.name = textfield.text!
-
-            
             self.save(category: newCategory)
-            
-            
-        
             
         }
         
@@ -114,11 +103,6 @@ class CategoryViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
         
     }
-  
-    
-    
-
-    
 
     
 }
